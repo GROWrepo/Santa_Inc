@@ -31,4 +31,8 @@ public class GameManager : MonoBehaviour {
     {
         this.current = dialogs;
     }
+    public STATUS_GAME getSG()
+    {
+        return this.SG;
+    }
 }
