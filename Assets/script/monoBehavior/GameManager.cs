@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     STATUS_GAME SG;
     dialog current;
+    
 	// Use this for initialization
 	void Start () {
         SG = STATUS_GAME.MENU;
