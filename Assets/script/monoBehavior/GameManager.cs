@@ -6,9 +6,11 @@ public class GameManager : MonoBehaviour {
     STATUS_GAME SG;
     public GameObject selectedObject;
     dialog current;
-    
-	// Use this for initialization
-	void Start () {
+    Ray2D clickRay;
+    RaycastHit2D hit;
+
+    // Use this for initialization
+    void Start () {
         SG = STATUS_GAME.MENU;
         current = null;
 	}
@@ -17,19 +19,17 @@ public class GameManager : MonoBehaviour {
 	void Update () {
         if (Input.GetMouseButtonDown(0))
         {
+            clickRay = new Ray2D(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero);
+            hit = Physics2D.Raycast(clickRay.origin, clickRay.direction);
+            if(hit.collider != null)
+            {
+                Debug.Log(hit.transform.gameObject);
+            }
         }
 	}
     private void OnGUI()
     {
-        if(this.SG == STATUS_GAME.DIALOGING)
-        {
-            if (this.current == null)
-                this.SG = STATUS_GAME.PAUSE;
-            else
-            {
-
-            }
-        }
+        
     }
     private void setCurrent(dialog dialogs)
     {
@@ -39,5 +39,8 @@ public class GameManager : MonoBehaviour {
     {
         return this.SG;
     }
-
+    void getHitObject(RaycastHit hit)
+    {
+        //this.hit = hit;
+    }
 }
