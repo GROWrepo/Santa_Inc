@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     STATUS_GAME SG;
+    public GameObject selectedObject;
     dialog current;
     
 	// Use this for initialization
@@ -14,7 +15,9 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (Input.GetMouseButtonDown(0))
+        {
+        }
 	}
     private void OnGUI()
     {
@@ -36,4 +39,5 @@ public class GameManager : MonoBehaviour {
     {
         return this.SG;
     }
+
 }
