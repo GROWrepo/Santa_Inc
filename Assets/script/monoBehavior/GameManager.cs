@@ -5,11 +5,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     STATUS_GAME SG;
     public GameObject selectedObject;
+    public GameObject doubleClickObject;
     dialog current;
     Ray2D clickRay;
     //RaycastHit2D hit;
     RaycastHit2D[] hits;
     public ContactFilter2D filter;
+    float doubleClickCount;
+    public float time;
 
     // Use this for initialization
     void Start () {
@@ -17,11 +20,19 @@ public class GameManager : MonoBehaviour {
         current = null;
         hits = new RaycastHit2D[10];
         filter = new ContactFilter2D();
+        doubleClickCount = 0;
+        time = 0;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        hits[0] = new RaycastHit2D();
+        time += Time.deltaTime;
+        if(time - doubleClickCount > 1.0f)
+        {
+            doubleClickObject = null;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             clickRay = new Ray2D(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10)), Vector2.zero);
@@ -34,8 +45,14 @@ public class GameManager : MonoBehaviour {
             }*/
             if(hits[0].collider != null)
             {
+                if (doubleClickObject == hits[0].transform.gameObject)
+                {
+                    doubleClicked(doubleClickObject);
+                }
                 Debug.Log(hits[0].transform.gameObject);
                 selectedObject = hits[0].transform.gameObject;
+                doubleClickObject = hits[0].transform.gameObject;
+                doubleClickCount = this.time;
             }
         }
 	}
@@ -54,5 +71,12 @@ public class GameManager : MonoBehaviour {
     void getHitObject(RaycastHit hit)
     {
         //this.hit = hit;
+    }
+    void doubleClicked(GameObject doubleClickedObject)
+    {
+        if(doubleClickedObject.tag == "NPC")
+        {
+            Debug.Log(doubleClickedObject.name);
+        }
     }
 }
