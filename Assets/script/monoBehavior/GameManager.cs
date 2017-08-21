@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     public ContactFilter2D filter;
     float doubleClickCount;
     public float time;
+    public GameObject test;
 
     // Use this for initialization
     void Start () {
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour {
         filter = new ContactFilter2D();
         doubleClickCount = 0;
         time = 0;
+        test = GameObject.Find("testNPC");
 	}
 	
 	// Update is called once per frame
