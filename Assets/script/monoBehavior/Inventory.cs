@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
     public Transform slot;
     public List<Slot> slotScripts = new List<Slot>();
+    public Transform draggingItem;
 
     void Awake()
     {
