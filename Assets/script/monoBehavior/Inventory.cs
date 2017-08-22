@@ -1,6 +1,5 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
@@ -9,6 +8,7 @@ public class Inventory : MonoBehaviour
     public Transform slot;
     public List<Slot> slotScripts = new List<Slot>();
     public Transform draggingItem;
+    public Slot enteredSlot;
 
     void Awake()
     {
@@ -24,7 +24,7 @@ public class Inventory : MonoBehaviour
             {
                 Transform newSlot = Instantiate(slot);
                 newSlot.name = "Slot" + (i + 1) + "." + (j + 1);
-                newSlot.parent = transform;
+                newSlot.SetParent(transform);
                 RectTransform slotRect = newSlot.GetComponent<RectTransform>();
                 slotRect.anchorMin = new Vector2(0.2f * j + 0.05f, 1 - (0.2f * (i + 1) - 0.05f));
                 slotRect.anchorMax = new Vector2(0.2f * (j + 1) - 0.05f, 1 - (0.2f * i + 0.05f));
@@ -38,7 +38,9 @@ public class Inventory : MonoBehaviour
         AddItem(0);
         AddItem(1);
     }
-
+    private void Update()
+    {
+    }
     void AddItem(int number)
     {
         for (int i = 0; i < slotScripts.Count; i++)
@@ -46,21 +48,21 @@ public class Inventory : MonoBehaviour
             if (slotScripts[i].item.itemValue == 0)
             {
                 slotScripts[i].item = ItemDatabase.instance.items[number];
-                ItemImageChange(slotScripts[i].transform);
+                ItemImageChange(slotScripts[i]);
                 break;
             }
         }
     }
 
-    void ItemImageChange(Transform _slot)
+    public void ItemImageChange(Slot _slot)
     {
-        if (_slot.GetComponent<Slot>().item.itemValue == 0)
-            _slot.GetChild(0).gameObject.SetActive(false);
+        if (_slot.item.itemValue == 0)
+            _slot.transform.GetChild(0).gameObject.SetActive(false);
         else
         {
-            _slot.GetChild(0).gameObject.SetActive(true);
-            _slot.GetChild(0).GetComponent<Image>().sprite = _slot.GetComponent<Slot>().item.itemImage;
+            _slot.transform.GetChild(0).gameObject.SetActive(true);
+            _slot.transform.GetChild(0).GetComponent<Image>().sprite = _slot.item.itemImage;
         }
     }
-}
 
+}
