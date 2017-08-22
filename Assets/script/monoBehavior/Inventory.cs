@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
     public Transform slot;
     public List<Slot> slotScripts = new List<Slot>();
+    public Transform draggingItem;
 
     void Awake()
     {
@@ -44,8 +46,20 @@ public class Inventory : MonoBehaviour
             if (slotScripts[i].item.itemValue == 0)
             {
                 slotScripts[i].item = ItemDatabase.instance.items[number];
+                ItemImageChange(slotScripts[i].transform);
                 break;
             }
+        }
+    }
+
+    void ItemImageChange(Transform _slot)
+    {
+        if (_slot.GetComponent<Slot>().item.itemValue == 0)
+            _slot.GetChild(0).gameObject.SetActive(false);
+        else
+        {
+            _slot.GetChild(0).gameObject.SetActive(true);
+            _slot.GetChild(0).GetComponent<Image>().sprite = _slot.GetComponent<Slot>().item.itemImage;
         }
     }
 }

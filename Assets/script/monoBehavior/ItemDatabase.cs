@@ -10,7 +10,6 @@ public class ItemDatabase : MonoBehaviour
     void Awake()
     {
         instance = this;
-        
     }
 
     // Use this for initialization
