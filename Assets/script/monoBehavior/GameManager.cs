@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour {
     public ContactFilter2D filter;
     float doubleClickCount;
     public float time;
+    int dialogCount;
 
     // Use this for initialization
     void Start () {
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour {
         filter.useTriggers = true;
         doubleClickCount = 0;
         time = 0;
+        dialogCount = 0;
 	}
 	
 	// Update is called once per frame
@@ -58,9 +60,29 @@ public class GameManager : MonoBehaviour {
                 doubleClickCount = this.time;
             }
         }
-        if(this.SG == STATUS_GAME.DIALOGING)
+        if (this.SG == STATUS_GAME.DIALOGING)
         {
             canvas.transform.GetChild(0).gameObject.SetActive(true);
+            if (dialogCount < current.Length - 1)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    dialogCount++;
+                }
+                canvas.transform.GetChild(0).gameObject.SendMessage("printDialog", current[dialogCount]);
+            }
+            else if(dialogCount == current.Length - 1)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    dialogCount++;
+                }
+            }
+            else
+            {
+                canvas.transform.GetChild(0).gameObject.SendMessage("closeDialog");
+                this.SG = STATUS_GAME.PLAYING;
+            }
         }
 	}
     private void OnGUI()
@@ -80,6 +102,7 @@ public class GameManager : MonoBehaviour {
         if(doubleClickedObject.tag == "NPC")
         {
             doubleClickedObject.SendMessage("getDialogs", this.gameObject);
+            this.dialogCount = -1;
             this.SG = STATUS_GAME.DIALOGING;
         }
     }
