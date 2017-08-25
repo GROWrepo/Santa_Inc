@@ -12,7 +12,7 @@ public class nothing : MonoBehaviour {
     void Start()
     {
         nothing_bt = this.gameObject.transform.GetChild(0).gameObject.GetComponent<Button>();
-        nothing_bt.onClick.AddListener(clickNothing);
+        nothing_bt.onClick.AddListener(delegate { clickNothing(true); });
     }
 
     // Update is called once per frame
@@ -21,8 +21,8 @@ public class nothing : MonoBehaviour {
 
     }
 
-    void clickNothing()
+    void clickNothing(bool result)
     {
-        Debug.Log("next script");
+        this.gameObject.transform.parent.gameObject.SendMessage("sendNothing", result);
     }
 }
