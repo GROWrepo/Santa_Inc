@@ -12,8 +12,8 @@ public class YesNo : MonoBehaviour {
     {
         Yes = this.gameObject.transform.GetChild(1).gameObject.GetComponent<Button>();
         No = this.gameObject.transform.GetChild(2).gameObject.GetComponent<Button>();
-        Yes.onClick.AddListener(clickYes);
-        No.onClick.AddListener(clickNo);
+        Yes.onClick.AddListener(delegate { click(true); });
+        No.onClick.AddListener(delegate { click(false); });
     }
 	
 	// Update is called once per frame
@@ -21,14 +21,9 @@ public class YesNo : MonoBehaviour {
     {
 
     }
-
-    void clickYes()
+    
+    void click(bool result)
     {
-        Debug.Log("Yes");
-    }
-
-    void clickNo()
-    {
-        Debug.Log("No");
+        this.gameObject.transform.parent.gameObject.SendMessage("sendYoN", result);
     }
 }

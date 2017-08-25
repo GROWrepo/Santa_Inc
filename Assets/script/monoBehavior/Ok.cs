@@ -11,7 +11,7 @@ public class Ok : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         ok = this.gameObject.transform.GetChild(1).gameObject.GetComponent<Button>();
-        ok.onClick.AddListener(clickOk);
+        ok.onClick.AddListener(delegate { clickOk(true); });
     }
 	
 	// Update is called once per frame
@@ -19,8 +19,8 @@ public class Ok : MonoBehaviour {
 		
 	}
 
-    void clickOk()
+    void clickOk(bool result)
     {
-        Debug.Log("Ok");
+        this.gameObject.transform.parent.gameObject.SendMessage("sendOk", result);
     }
 }
