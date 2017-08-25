@@ -9,3 +9,4 @@
 ## 6. Puzzle
 ## 7. Stage platform
 ## 8. GUI
++ Juha
