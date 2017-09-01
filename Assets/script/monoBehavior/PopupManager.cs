@@ -24,10 +24,12 @@ public class PopupManager : MonoBehaviour {
         this.owner = popup.geta();
         temp.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = popup.getText();
     }
+
     void Delete_Popup()
     {
         Destroy(temp.gameObject);
     }
+
     void sendYoN(bool result)
     {
         Debug.Log(result);
