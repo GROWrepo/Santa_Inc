@@ -7,6 +7,7 @@ public class PU_Input : MonoBehaviour {
     public InputField InputText;
     public GameObject buttons;
     public Button apply;
+    string answer;
 
 	// Use this for initialization
 	void Start () {
@@ -28,4 +29,5 @@ public class PU_Input : MonoBehaviour {
     {
         this.gameObject.transform.parent.gameObject.SendMessage("sendInput", result);
     }
+
 }
