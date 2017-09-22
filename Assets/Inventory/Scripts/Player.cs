@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
     /// The player's movement speed
     /// </summary>
     public float speed;
+    public GameObject getItems;
 
     /// <summary>
     /// A reference to the inventory
@@ -22,7 +23,16 @@ public class Player : MonoBehaviour {
 	void Update () 
     {
         HandleMovement();
-	}
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if(getItems != null)
+            {
+                inventory.AddItem(getItems.GetComponent<Item>()); //Adds the item to the inventory.
+            }
+        }
+
+    }
 
     /// <summary>
     /// Handles the players movement
@@ -33,18 +43,25 @@ public class Player : MonoBehaviour {
         float translation = speed * Time.deltaTime;
 
         //Moves the player
-        transform.Translate(new Vector3(Input.GetAxis("Horizontal") * translation, 0, Input.GetAxis("Vertical") * translation));
+        transform.Translate(new Vector2(Input.GetAxis("Horizontal") * translation, 0));
+        //Input.GetAxis("Vertical") * translation - y좌표축 이동 
     }
 
     /// <summary>
     /// Handles the player's collision
     /// </summary>
     /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    /// 
+    private void getItem(GameObject other)
     {
-        if (other.tag == "Item") //If we collide with an item that we can pick up
-        {
-            inventory.AddItem(other.GetComponent<Item>()); //Adds the item to the inventory.
-        }
+        getItems = other;
+          
     }
+
+    private void lostItem()
+    {
+        getItems = null;
+    }
+
+    
 }
