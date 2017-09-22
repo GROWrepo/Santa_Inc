@@ -4,52 +4,56 @@ using UnityEngine;
 
 public class player : MonoBehaviour
 {
-    public float movePower = 1f;
-    public float jumpPower = 1f;
+    public player self = new player();
+
+    float speed;
+    bool isRight;
+    bool isUp;
 
     Rigidbody2D rigid;
 
     Vector3 movement;
-    bool isJump = false;
-
+    
+    
     void Start()
     {
-        rigid = gameObject.GetComponent<Rigidbody2D>();
+        isRight = false;
+        isUp = false;
+        speed = 5.0f;
     }
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKey(KeyCode.A))
         {
-            isJump = true;
-        }
-        {
-            Vector3 moveVelocity = Vector3.zero;
-
-            if (Input.GetAxisRaw("Horizontal") < 0 )
+            if (this.isRight)
             {
-                moveVelocity = Vector3.left;
+                isRight = false;
+                this.gameObject.GetComponent<Transform>().GetChild(1).GetComponent<Transform>().Rotate(0, 10, 0);
             }
-            else if (Input.GetAxisRaw("Horizontal") > 0 )
-            {
-                moveVelocity = Vector3.right;
-            }
-
-            transform.position += moveVelocity * movePower * Time.deltaTime;
-
+            this.gameObject.GetComponent<Transform>().Translate(-this.speed * Time.deltaTime, 0, 0);
         }
+        else if (Input.GetKey(KeyCode.D))
         {
-            if (!isJump)
-                return;
-            rigid.velocity = Vector2.zero;
-
-            Vector2 jumpVelocity = new Vector2(0, jumpPower);
-            rigid.AddForce(jumpVelocity, ForceMode2D.Impulse);
-
-            isJump = false;
+            if (!this.isRight)
+            {
+                isRight = true;
+                this.gameObject.GetComponent<Transform>().GetChild(1).GetComponent<Transform>().Rotate(0, 10, 0);
+            }
+            this.gameObject.GetComponent<Transform>().Translate(this.speed * Time.deltaTime, 0, 0);
+          
         }
+        else if (Input.GetKey(KeyCode.W))
+        {
+            if (!this.isUp)
+            {
+                isUp = true;
+                this.gameObject.GetComponent<Transform>().GetChild(1).GetComponent<Transform>().Rotate(0, 10, 0);
+            }
+            this.gameObject.GetComponent<Transform>().Translate(0,this.speed * Time.deltaTime, 0);
+
+        }
+
     }
-
-    
 }
 
   
