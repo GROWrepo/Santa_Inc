@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public interface interface_NPC {
-
+public enum STATUS_PLAYER {
+    PAUSE
 }
