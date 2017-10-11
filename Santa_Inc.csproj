@@ -93,6 +93,7 @@
     <Compile Include="Assets\script\monoBehavior\PopupManager.cs" />
     <Compile Include="Assets\script\monoBehavior\YesNo.cs" />
     <Compile Include="Assets\script\monoBehavior\nothing.cs" />
+    <Compile Include="Assets\script\monoBehavior\player.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
