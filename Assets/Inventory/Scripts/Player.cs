@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     /// </summary>
     public float speed;
     public GameObject getItems;
+    public GameObject canvasObject;
 
     /// <summary>
     /// A reference to the inventory
@@ -16,7 +17,7 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        
 	}
 	
 	// Update is called once per frame

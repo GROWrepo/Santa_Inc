@@ -179,9 +179,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     /// </summary>
     /// <param name="eventData"></param>
     public void OnPointerClick(PointerEventData eventData)
-    {   
+    {
         //If the right mousebutton was clicked
-        if (eventData.button == PointerEventData.InputButton.Right) 
+        if (eventData.button == PointerEventData.InputButton.Right && !GameObject.Find("Hover")) 
         {
             //Uses an item on the slot
             UseItem();

@@ -83,6 +83,13 @@ public class Inventory : MonoBehaviour
     /// </summary>
     public EventSystem eventSystem;
 
+    public CanvasGroup canvasGroup;
+
+    private bool fadingIn;
+
+    private bool fadingOut;
+    
+    public float fadeTime;
     #endregion
 
     #region Collections
@@ -107,6 +114,7 @@ public class Inventory : MonoBehaviour
     {   
         //Creates the inventory layout
         CreateLayout();
+
     }
 
     // Update is called once per frame
@@ -142,7 +150,20 @@ public class Inventory : MonoBehaviour
 
             //Sets the hoverObject's position
             hoverObject.transform.position = canvas.transform.TransformPoint(position);
+
         }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            if(canvasGroup.alpha > 0)
+            {
+                StartCoroutine("FadeOut");
+            } else
+            {
+                StartCoroutine("FadeIn");
+            }
+        }
+
     }
 
     /// <summary>
@@ -195,8 +216,9 @@ public class Inventory : MonoBehaviour
                 slotRect.localPosition = inventoryRect.localPosition + new Vector3(slotPaddingLeft * (x + 1) + (slotSize * x), -slotPaddingTop * (y + 1) - (slotSize * y));
 
                 //Sets the size of the slot
-                slotRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, slotSize);
-                slotRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, slotSize);
+                slotRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, slotSize * canvas.scaleFactor);
+                slotRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, slotSize * canvas.scaleFactor);
+                newSlot.transform.SetParent(this.transform);
 
                 //Adds the new slots to the slot list
                 allSlots.Add(newSlot);
@@ -330,6 +352,58 @@ public class Inventory : MonoBehaviour
             to = null;
             from = null;
             hoverObject = null;
+        }
+    }
+
+    private IEnumerator FadeOut()
+    {
+        if(!fadingOut)
+        {
+            fadingOut = true;
+            fadingIn = false;
+            StopCoroutine("FadeIn");
+
+            float startAlpha = canvasGroup.alpha;
+            float rate = 1.0f / fadeTime;
+            float progress = 0.0f;
+
+            while(progress < 1.0)
+            {
+                canvasGroup.alpha = Mathf.Lerp(startAlpha, 0, progress);
+
+                progress += rate * Time.deltaTime;
+
+                yield return null;
+            }
+
+            canvasGroup.alpha = 0;
+            fadingOut = false;
+        }
+    }
+
+    private IEnumerator FadeIn()
+    {
+        if (!fadingIn)
+        {
+            fadingOut = false;
+            fadingIn = true;
+            StopCoroutine("FadeOut");
+
+            float startAlpha = canvasGroup.alpha;
+            float rate = 1.0f / fadeTime;
+            float progress = 0.0f;
+
+            while (progress < 1.0)
+            {
+                canvasGroup.alpha = Mathf.Lerp(startAlpha, 1, progress);
+
+                progress += rate * Time.deltaTime;
+
+                yield return null;
+            }
+
+            canvasGroup.alpha = 1;
+            fadingIn = false;
         }
     }
 }
