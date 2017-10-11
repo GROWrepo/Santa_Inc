@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class player : MonoBehaviour
 {
-    public player self = new player();
 
     float speed;
     bool isRight;
@@ -19,12 +18,15 @@ public class player : MonoBehaviour
     {
         isRight = false;
         isUp = false;
+      
         speed = 5.0f;
+
     }
     void Update()
     {
         if (Input.GetKey(KeyCode.A))
         {
+            
             if (this.isRight)
             {
                 isRight = false;
@@ -35,6 +37,9 @@ public class player : MonoBehaviour
         else if (Input.GetKey(KeyCode.D))
         {
             if (!this.isRight)
+            {
+
+            }
             {
                 isRight = true;
                 this.gameObject.GetComponent<Transform>().GetChild(1).GetComponent<Transform>().Rotate(0, 10, 0);
@@ -47,11 +52,12 @@ public class player : MonoBehaviour
             if (!this.isUp)
             {
                 isUp = true;
-                this.gameObject.GetComponent<Transform>().GetChild(1).GetComponent<Transform>().Rotate(0, 10, 0);
+                this.gameObject.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 10, 0);
             }
             this.gameObject.GetComponent<Transform>().Translate(0,this.speed * Time.deltaTime, 0);
-
+            
         }
+      
 
     }
 }
