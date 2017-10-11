@@ -4,24 +4,29 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     STATUS_GAME SG;
+    GameObject canvas;
     public GameObject selectedObject;
     public GameObject doubleClickObject;
-    dialog current;
+    public dialog[] current;
     Ray2D clickRay;
     //RaycastHit2D hit;
     RaycastHit2D[] hits;
     public ContactFilter2D filter;
     float doubleClickCount;
     public float time;
+    int dialogCount;
 
     // Use this for initialization
     void Start () {
+        canvas = GameObject.Find("Canvas");
         SG = STATUS_GAME.MENU;
         current = null;
         hits = new RaycastHit2D[10];
         filter = new ContactFilter2D();
+        filter.useTriggers = true;
         doubleClickCount = 0;
         time = 0;
+        dialogCount = 0;
 	}
 	
 	// Update is called once per frame
@@ -29,7 +34,7 @@ public class GameManager : MonoBehaviour {
     {
         hits[0] = new RaycastHit2D();
         time += Time.deltaTime;
-        if(time - doubleClickCount > 1.0f)
+        if(time - doubleClickCount > 0.5f)
         {
             doubleClickObject = null;
         }
@@ -55,12 +60,36 @@ public class GameManager : MonoBehaviour {
                 doubleClickCount = this.time;
             }
         }
+        if (this.SG == STATUS_GAME.DIALOGING)
+        {
+            canvas.transform.GetChild(0).gameObject.SetActive(true);
+            if (dialogCount < current.Length - 1)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    dialogCount++;
+                }
+                canvas.transform.GetChild(0).gameObject.SendMessage("printDialog", current[dialogCount]);
+            }
+            else if(dialogCount == current.Length - 1)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    dialogCount++;
+                }
+            }
+            else
+            {
+                canvas.transform.GetChild(0).gameObject.SendMessage("closeDialog");
+                this.SG = STATUS_GAME.PLAYING;
+            }
+        }
 	}
     private void OnGUI()
     {
         
     }
-    private void setCurrent(dialog dialogs)
+    private void setCurrent(dialog[] dialogs)
     {
         this.current = dialogs;
     }
@@ -68,15 +97,13 @@ public class GameManager : MonoBehaviour {
     {
         return this.SG;
     }
-    void getHitObject(RaycastHit hit)
-    {
-        //this.hit = hit;
-    }
     void doubleClicked(GameObject doubleClickedObject)
     {
         if(doubleClickedObject.tag == "NPC")
         {
-            Debug.Log(doubleClickedObject.name);
+            doubleClickedObject.SendMessage("getDialogs", this.gameObject);
+            this.dialogCount = -1;
+            this.SG = STATUS_GAME.DIALOGING;
         }
     }
 }

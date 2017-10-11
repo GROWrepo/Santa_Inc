@@ -296,8 +296,10 @@ public class Inventory : MonoBehaviour
     /// <param name="clicked"></param>
     public void MoveItem(GameObject clicked)
     {
+        Debug.Log(from);
         if (from == null) //If we haven't picked up an item
         {
+            Debug.Log(clicked.GetComponent<Slot>().IsEmpty);
             if (!clicked.GetComponent<Slot>().IsEmpty) //If the slot we clicked sin't empty
             {
                 from = clicked.GetComponent<Slot>(); //The slot we ar emoving from
