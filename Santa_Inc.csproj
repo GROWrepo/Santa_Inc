@@ -85,6 +85,7 @@
     <Compile Include="Assets\script\class\Popup.cs" />
     <Compile Include="Assets\script\class\dialog.cs" />
     <Compile Include="Assets\script\enum\STATUS_GAME.cs" />
+    <Compile Include="Assets\script\enum\STATUS_PLAYER.cs" />
     <Compile Include="Assets\script\interface\interface_NPC.cs" />
     <Compile Include="Assets\script\monoBehavior\CommunicationManager.cs" />
     <Compile Include="Assets\script\monoBehavior\GameManager.cs" />
