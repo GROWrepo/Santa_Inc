@@ -5,16 +5,17 @@ using UnityEngine;
 public class player : MonoBehaviour
 {
     float speed;
-    
+    public bool isGrounded;
+    public bool isOnRope;
 
     Rigidbody2D rigid;
     Vector3 movement;
-    STATUS_PLAYER SP;
+    public STATUS_PLAYER SP;
 
 	// Use this for initialization
 	void Start ()
     {
-       
+        isGrounded = false;
 
         speed = 5.0f;
         SP = STATUS_PLAYER.STANDING;
@@ -25,7 +26,9 @@ public class player : MonoBehaviour
     {
         if (SP == STATUS_PLAYER.STANDING)
         {
+            this.gameObject.GetComponent<Collider2D>().isTrigger = false;
             this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+
             if (Input.GetKey(KeyCode.A))
             {
                 SP = STATUS_PLAYER.WALKING;
@@ -34,12 +37,14 @@ public class player : MonoBehaviour
             {
                 SP = STATUS_PLAYER.WALKING;
             }
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W) && isOnRope)
             {
+                isGrounded = false;
                 SP = STATUS_PLAYER.ROPING;
             }
-            if(Input.GetKey(KeyCode.S))
+            if(Input.GetKey(KeyCode.S) && isOnRope)
             {
+                isGrounded = false;
                 SP = STATUS_PLAYER.ROPING;
             }
         }
@@ -53,12 +58,14 @@ public class player : MonoBehaviour
             {
                 this.gameObject.GetComponent<Transform>().Translate(this.speed * Time.deltaTime, 0, 0);
             }
-            if(Input.GetKey(KeyCode.W))
+            if(Input.GetKey(KeyCode.W) && isOnRope)
             {
+                isGrounded = false;
                 SP = STATUS_PLAYER.ROPING;
             }
-            if(Input.GetKey(KeyCode.S))
+            if(Input.GetKey(KeyCode.S) && isOnRope)
             {
+                isGrounded = false;
                 SP = STATUS_PLAYER.ROPING;
             }
             else
@@ -72,18 +79,25 @@ public class player : MonoBehaviour
             this.gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
             this.gameObject.GetComponent<Collider2D>().isTrigger = true;
 
-            
+
+            if (isGrounded == true)
+            {
+                SP = STATUS_PLAYER.STANDING;
+
+            }
             if (Input.GetKey(KeyCode.W))
             {
-                  this.gameObject.GetComponent<Transform>().Translate(0, this.speed * Time.deltaTime, 0);
+                if (!isGrounded)
+                {
+                    this.gameObject.GetComponent<Transform>().Translate(0, this.speed * Time.deltaTime, 0);
+                }
             }
             else if (Input.GetKey(KeyCode.S))
             {
-                  this.gameObject.GetComponent<Transform>().Translate(0, -this.speed * Time.deltaTime, 0);
-            }
-            else 
-            {
-                 
+                if (!isGrounded)
+                {
+                    this.gameObject.GetComponent<Transform>().Translate(0, -this.speed * Time.deltaTime, 0);
+                }
             }
             
         }
@@ -91,8 +105,30 @@ public class player : MonoBehaviour
         {
 
         }
-        
-            
     }
-        
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("ROPE"))
+        {
+            isOnRope = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("ROPE"))
+        {
+            isOnRope = false;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("GROUND") && !isGrounded)
+        {
+            isGrounded = true;
+            Debug.Log(collision);
+        }
+    }
 }
