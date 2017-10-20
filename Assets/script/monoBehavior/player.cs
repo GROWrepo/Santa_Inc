@@ -5,8 +5,7 @@ using UnityEngine;
 public class player : MonoBehaviour
 {
     float speed;
-    bool isUp;
-    bool isRight;
+    
 
     Rigidbody2D rigid;
     Vector3 movement;
@@ -15,8 +14,7 @@ public class player : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
-        isRight = false;
-        isUp = false;
+       
 
         speed = 5.0f;
         SP = STATUS_PLAYER.STANDING;
@@ -83,7 +81,7 @@ public class player : MonoBehaviour
             {
                   this.gameObject.GetComponent<Transform>().Translate(0, -this.speed * Time.deltaTime, 0);
             }
-            else if 
+            else 
             {
                  
             }
