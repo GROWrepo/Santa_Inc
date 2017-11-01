@@ -25,6 +25,10 @@ public class Item : MonoBehaviour
     /// </summary>
     public int maxSize;
 
+    public string itemName;
+
+    public string description;
+
     /// <summary>
     /// Uses the item
     /// </summary>
@@ -56,6 +60,20 @@ public class Item : MonoBehaviour
         {
             collision.SendMessage("lostItem");
         }
+    }
+
+    public string GetTooltip()
+    {
+
+        string newLine = string.Empty; //Resets the new line
+
+        if (description != string.Empty) //Creates a newline if the item has a description, this is done to makes sure that the headline and the describion isn't on the same line
+        {
+            newLine = "\n";
+        }
+
+        //Returns the formattet string
+        return string.Format("<color=red><size=16>{0}</size></color><size=14><i><color=lime>" + newLine + "{1}</color></i></size>", itemName, description);
     }
 
 }
