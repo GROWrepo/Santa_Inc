@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class playerCamera : MonoBehaviour {
     GameObject player;
-    Transform[] ends;
+    Transform[] landscapes;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
-        ends = GameObject.Find("LandScapeManager").transform.GetComponentsInChildren<Transform>();
+        landscapes = GameObject.Find("LandScapeManager").transform.GetComponentsInChildren<Transform>();
 	}
 	
 	// Update is called once per frame
