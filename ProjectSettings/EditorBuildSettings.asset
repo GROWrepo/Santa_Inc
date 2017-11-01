@@ -4,4 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/scene/Temp_Change_Scene/Test1.unity
+    guid: 8f88450d3493fde4ea251cb776f6ff66
+  - enabled: 1
+    path: Assets/scene/Temp_Change_Scene/Test2.unity
+    guid: ed8cf6d2a384b36408edf9f323a1b5de
+  - enabled: 0
+    path: Assets/scene/Test3.unity
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/scene/Temp_Change_Scene/Test3.unity
+    guid: 00000000000000000000000000000000

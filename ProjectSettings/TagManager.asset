@@ -44,12 +44,3 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: BackGround
-    uniqueID: 3153066033
-    locked: 0
-  - name: LandScape
-    uniqueID: 933473785
-    locked: 0
-  - name: FrontGround
-    uniqueID: 2242761089
-    locked: 0

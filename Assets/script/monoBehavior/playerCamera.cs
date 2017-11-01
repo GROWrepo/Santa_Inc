@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class playerCamera : MonoBehaviour {
     GameObject player;
+    Transform[] ends;
 	// Use this for initialization
 	void Start () {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
+        ends = GameObject.Find("LandScapeManager").transform.GetComponentsInChildren<Transform>();
 	}
 	
 	// Update is called once per frame
