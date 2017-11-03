@@ -7,18 +7,18 @@ public class player : MonoBehaviour
     float speed;
     public bool isGrounded;
     public bool isOnRope;
-    public GameObject getItems;
-    public GameObject canvasObject;
-    public Inventory inventory;
 
     Rigidbody2D rigid;
     Vector3 movement;
     public STATUS_PLAYER SP;
+    public GameObject rope;
 
 	// Use this for initialization
 	void Start ()
     {
         isGrounded = false;
+
+        rope = null;
 
         speed = 5.0f;
         SP = STATUS_PLAYER.STANDING;
@@ -27,13 +27,6 @@ public class player : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (getItems != null)
-            {
-                inventory.AddItem(getItems.GetComponent<Item>()); //Adds the item to the inventory.
-            }
-        }
         if (SP == STATUS_PLAYER.STANDING)
         {
             this.gameObject.GetComponent<Collider2D>().isTrigger = false;
@@ -95,7 +88,7 @@ public class player : MonoBehaviour
                 SP = STATUS_PLAYER.STANDING;
 
             }
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))                                                                                                            
             {
                 if (!isGrounded)
                 {
@@ -141,14 +134,19 @@ public class player : MonoBehaviour
             Debug.Log(collision);
         }
     }
-    private void getItem(GameObject other)
-    {
-        getItems = other;
 
+    void setRopeNull()
+    {
+        this.rope = null;
+        isOnRope = false;
     }
 
-    private void lostItem()
+    void setRope(GameObject rope)
     {
-        getItems = null;
+        if (rope != null)
+        {
+            this.rope = rope;
+            isOnRope = true;
+        }
     }
 }
