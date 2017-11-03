@@ -7,6 +7,8 @@ TagManager:
   - NPC
   - BUTTON
   - Item
+  - GROUND
+  - ROPE
   layers:
   - Default
   - TransparentFX
