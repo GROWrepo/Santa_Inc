@@ -83,7 +83,12 @@ public class Inventory : MonoBehaviour
     /// </summary>
     public EventSystem eventSystem;
 
-    public CanvasGroup canvasGroup;
+    private static CanvasGroup canvasGroup;
+
+    public static CanvasGroup CanvasGroup
+    {
+        get { return Inventory.canvasGroup; }
+    }
 
     private bool fadingIn;
 
@@ -108,18 +113,56 @@ public class Inventory : MonoBehaviour
         get { return emptySlots; }
         set { emptySlots = value; }
     }
+
     #endregion
+
+    public GameObject tooltipObject;
+    private static GameObject tooltip;
+
+    public Text sizeTextObject;
+    private static Text sizeText;
+
+    public Text visualTextObject;
+    private static Text visualText;
+
     // Use this for initialization
     void Start()
-    {   
+    {
+        tooltip = tooltipObject;
+        sizeText = sizeTextObject;
+        visualText = visualTextObject;
+        
+        canvasGroup = transform.GetComponent<CanvasGroup>();
         //Creates the inventory layout
         CreateLayout();
 
     }
 
+    public void ShowToolTip(GameObject slot)
+    {
+        Slot tempSlot = slot.GetComponent<Slot>();
+
+        if(!tempSlot.IsEmpty && hoverObject == null && canvasGroup.alpha > 0)
+        {
+            visualText.text = tempSlot.CurrentItem.GetTooltip();
+            sizeText.text = visualText.text;
+            tooltip.SetActive(true);
+
+            float xPos = slot.transform.position.x + slotPaddingLeft;
+            float yPos = slot.transform.position.y - slot.GetComponent<RectTransform>().sizeDelta.y - slotPaddingTop;
+
+            tooltip.transform.position = new Vector2(xPos, yPos);
+        }
+    }
+
+    public void HideToolTip(GameObject slot)
+    {
+        tooltip.SetActive(false);
+    }
+
     // Update is called once per frame
     void Update()
-    {
+    {   
         if (Input.GetMouseButtonUp(0)) //Checks if the user lifted the first mousebutton
         {   
             //Removes the selected item from the inventory
@@ -157,6 +200,8 @@ public class Inventory : MonoBehaviour
         {
             if(canvasGroup.alpha > 0)
             {
+                HideToolTip(tooltip);
+                //인벤토리가 꺼질 때 툴팁 또한 꺼져야 하므로
                 StartCoroutine("FadeOut");
             } else
             {
