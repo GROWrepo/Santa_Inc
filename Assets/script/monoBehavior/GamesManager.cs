@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GamesManager : MonoBehaviour {
     STATUS_GAME SG;
     public GameObject selectedObject;
     public GameObject doubleClickObject;
+    Scene currentScene;
     dialog current;
     Ray2D clickRay;
     //RaycastHit2D hit;
@@ -22,6 +24,7 @@ public class GamesManager : MonoBehaviour {
         filter = new ContactFilter2D();
         doubleClickCount = 0;
         time = 0;
+        currentScene = SceneManager.GetActiveScene();
 	}
 	
 	// Update is called once per frame
@@ -58,7 +61,10 @@ public class GamesManager : MonoBehaviour {
 	}
     private void OnGUI()
     {
-        
+        if(currentScene == SceneManager.GetSceneByName("stage1"))
+        {
+            Debug.Log("update");
+        }
     }
     private void setCurrent(dialog dialogs)
     {

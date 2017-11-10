@@ -20,12 +20,10 @@ public class playerCamera : MonoBehaviour {
 	void Update () {
         if (player.transform.position.x >= (leftEnd.position.x + 8.4) && player.transform.position.x <= (rightEnd.position.x - 8.4))
         {
-            Debug.Log("update");
             this.transform.Translate(new Vector3(player.transform.position.x - this.transform.position.x, 0, 0));
         }
         if (player.transform.position.y >= (landscapes[2].position.y + 4.5))
         {
-            Debug.Log("update");
             this.transform.Translate(new Vector3(0, player.transform.position.y - this.transform.position.y), 0);
         }
 	}
