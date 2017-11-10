@@ -5,7 +5,6 @@
 + Sunhee
 ## 3. Save/Load
 ## 4. Function of Player
-+ Suhyun
 ## ~~5. Popup~~
 + Juha
 ## 6. Puzzle
@@ -14,3 +13,4 @@
 + Hyunji
 ## 8. GUI
 + Juha
++ Suhyun
