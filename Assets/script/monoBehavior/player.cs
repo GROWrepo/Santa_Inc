@@ -23,9 +23,8 @@ public class player : MonoBehaviour
         speed = 5.0f;
         SP = STATUS_PLAYER.STANDING;
 	}
-	
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update ()
     {
         if (SP == STATUS_PLAYER.STANDING)
         {
