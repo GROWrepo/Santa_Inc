@@ -122,7 +122,7 @@ public class player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ROPE"))
         {
-            isOnRope = false;
+            isOnRope = false;   
         }
     }
 
