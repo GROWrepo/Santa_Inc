@@ -25,12 +25,12 @@ public class rope : MonoBehaviour
             
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             player.SendMessage("setRope", this.gameObject, SendMessageOptions.DontRequireReceiver);
-            Debug.Log(collision);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -38,7 +38,6 @@ public class rope : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             player.SendMessage("setRopeNull");
-            Debug.Log(collision);
         }
     }
 }
